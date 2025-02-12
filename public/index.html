@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图片标注工具</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #imageCanvas {
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="folderSelect">
+            <h2>选择图片文件夹</h2>
+            <input type="text" id="folderPath" placeholder="输入文件夹路径">
+            <button onclick="loadImages()">加载图片</button>
+        </div>
+        
+        <div id="imageEditor" class="hidden">
+            <div class="controls">
+                <button onclick="prevImage()">上一张</button>
+                <button onclick="nextImage()">下一张</button>
+                <button onclick="saveImage()">保存标注</button>
+            </div>
+            <canvas id="imageCanvas"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
