@@ -14,6 +14,7 @@ app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static('public'));
 // 添加input目录的静态文件服务
 app.use('/input', express.static('input'));
+app.use('/input2', express.static('input2'));
 
 // 获取图片列表
 app.post('/getImages', (req, res) => {

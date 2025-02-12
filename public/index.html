@@ -31,6 +31,21 @@
         #annotationSize {
             width: 60px;
         }
+        .shortcut-settings {
+            display: flex;
+            gap: 15px;
+            margin-left: 20px;
+        }
+        .shortcut-settings input {
+            width: 100px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        .shortcut-settings label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -47,14 +62,20 @@
                 <button onclick="nextImage()">下一张</button>
                 <button onclick="saveImage()">保存标注</button>
                 <div class="annotation-settings">
-                    <input type="text" id="annotationText" value="G" placeholder="标注文字">
+                    <input type="text" id="annotationText" value="YES" placeholder="标注文字">
                     <input type="color" id="annotationColor" value="#000000">
-                    <input type="number" id="annotationSize" value="20" min="10" max="100">
+                    <input type="number" id="annotationSize" value="25" min="10" max="100">
+                    <div class="shortcut-settings">
+                        <label>上一张快捷键：<input type="text" id="prevKeyShortcut" value="ArrowLeft" readonly></label>
+                        <label>下一张快捷键：<input type="text" id="nextKeyShortcut" value="ArrowRight" readonly></label>
+                    </div>
                 </div>
             </div>
+            <div id="imageInfo" style="margin: 10px 0; font-size: 16px;"></div>
             <canvas id="imageCanvas"></canvas>
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="message.js"></script>
 </body>
 </html> 
