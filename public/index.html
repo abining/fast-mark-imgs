@@ -11,12 +11,25 @@
         #imageCanvas {
             border: 1px solid #ccc;
             margin-top: 20px;
+            max-height: 90vh; /* 限制画布最大高度为视窗高度的90% */
         }
         .controls {
             margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .annotation-settings {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 20px;
         }
         .hidden {
             display: none;
+        }
+        #annotationSize {
+            width: 60px;
         }
     </style>
 </head>
@@ -33,6 +46,11 @@
                 <button onclick="prevImage()">上一张</button>
                 <button onclick="nextImage()">下一张</button>
                 <button onclick="saveImage()">保存标注</button>
+                <div class="annotation-settings">
+                    <input type="text" id="annotationText" value="G" placeholder="标注文字">
+                    <input type="color" id="annotationColor" value="#000000">
+                    <input type="number" id="annotationSize" value="20" min="10" max="100">
+                </div>
             </div>
             <canvas id="imageCanvas"></canvas>
         </div>

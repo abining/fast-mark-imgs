@@ -2,6 +2,7 @@ let currentImageIndex = 0;
 let images = [];
 let canvas, ctx;
 const marks = new Map(); // 存储每张图片的标注
+let currentScale = 1; // 添加一个全局变量来保存当前缩放比例
 
 async function loadImages() {
     const folderPath = document.getElementById('folderPath').value;
@@ -36,7 +37,20 @@ function initCanvas() {
         if (!marks.has(images[currentImageIndex])) {
             marks.set(images[currentImageIndex], []);
         }
-        marks.get(images[currentImageIndex]).push({ x, y });
+        
+        // 获取当前标注配置
+        const text = document.getElementById('annotationText').value;
+        const color = document.getElementById('annotationColor').value;
+        const size = parseInt(document.getElementById('annotationSize').value);
+        
+        // 直接使用缩放后的坐标
+        marks.get(images[currentImageIndex]).push({
+            x: x,
+            y: y,
+            text,
+            color,
+            size
+        });
         
         drawCurrentImage();
     });
@@ -45,16 +59,29 @@ function initCanvas() {
 function drawCurrentImage() {
     const img = new Image();
     img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+        // 计算缩放比例
+        const maxHeight = window.innerHeight * 0.9;
+        currentScale = 1;
+        if (img.height > maxHeight) {
+            currentScale = maxHeight / img.height;
+        }
+        
+        // 设置画布尺寸
+        canvas.width = img.width * currentScale;
+        canvas.height = img.height * currentScale;
+        
+        // 清除画布
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 绘制图片
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         
         // 绘制标注
         const currentMarks = marks.get(images[currentImageIndex]) || [];
-        ctx.font = '20px Arial';
-        ctx.fillStyle = 'black';
         currentMarks.forEach(mark => {
-            ctx.fillText('G', mark.x, mark.y);
+            ctx.font = `${mark.size}px Arial`;
+            ctx.fillStyle = mark.color;
+            ctx.fillText(mark.text, mark.x, mark.y);
         });
     };
     img.src = images[currentImageIndex];
